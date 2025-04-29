@@ -5,7 +5,10 @@ def create_app():
     app = Flask(__name__)
     
     # Initialize Excel connection for real-time updates
-    init_excel_connector()
+    # Only init Excel on local environment, not on render
+    import os
+    if os.environ.get('RENDER') != 'true':
+        init_excel_connector()
     
     # Register blueprints
     from app.routes import main_bp
